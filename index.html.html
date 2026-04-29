@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>AB's Bricket - Premium Charcoal Briquettes</title>
+  <!-- Font Awesome 6 (free icons) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- Google Fonts: modern sans -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background: #fef8ed;
+      color: #2c2b28;
+    }
+
+    /* header & nav */
+    .navbar {
+      background: #1f3b2c;
+      padding: 1rem 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    .logo h1 {
+      color: #f5b042;
+      font-size: 1.7rem;
+      letter-spacing: -0.5px;
+    }
+    .logo p {
+      color: #e0d6b0;
+      font-size: 0.8rem;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.8rem;
+      flex-wrap: wrap;
+    }
+    .nav-links a {
+      color: #fef3da;
+      text-decoration: none;
+      font-weight: 600;
+      transition: 0.2s;
+    }
+    .nav-links a:hover, .nav-links .active {
+      color: #ffcf4a;
+      border-bottom: 2px solid #ffcf4a;
+      padding-bottom: 4px;
+    }
+
+    .cart-icon {
+      background: #f5b042;
+      padding: 0.5rem 1rem;
+      border-radius: 40px;
+      color: #1f3b2c;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    /* main container */
+    .container {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+    }
+
+    /* page sections */
+    .page {
+      display: none;
+      animation: fade 0.3s ease;
+    }
+    .active-page {
+      display: block;
+    }
+
+    @keyframes fade {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* products grid */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    .product-card {
+      background: white;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+      transition: transform 0.2s;
+    }
+    .product-card:hover {
+      transform: translateY(-5px);
+    }
+    .product-img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      background: #d9c8a7;
+    }
+    .product-info {
+      padding: 1.2rem;
+    }
+    .price {
+      font-weight: 700;
+      font-size: 1.3rem;
+      color: #1f3b2c;
+    }
+    .old-price {
+      text-decoration: line-through;
+      color: #a07e4e;
+      font-size: 0.9rem;
+      margin-left: 8px;
+    }
+    .discount-badge {
+      background: #e67e22;
+      color: white;
+      font-size: 0.7rem;
+      border-radius: 20px;
+      padding: 2px 8px;
+      margin-left: 8px;
+    }
+    button.add-to-cart {
+      background: #1f3b2c;
+      border: none;
+      color: white;
+      padding: 10px 0;
+      width: 100%;
+      margin-top: 12px;
+      border-radius: 40px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    button.add-to-cart:hover {
+      background: #f5b042;
+      color: #1f3b2c;
+    }
+
+    /* search bar */
+    .search-bar {
+      margin: 20px 0 10px;
+      display: flex;
+      gap: 10px;
+    }
+    .search-bar input {
+      flex: 1;
+      padding: 12px 18px;
+      border: 1px solid #ccb38c;
+      border-radius: 60px;
+      font-size: 1rem;
+      background: white;
+    }
+    .search-bar button {
+      background: #1f3b2c;
+      border: none;
+      padding: 0 24px;
+      border-radius: 60px;
+      color: white;
+      cursor: pointer;
+    }
+
+    /* checkout page styling */
+    .checkout-layout {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+    }
+    .cart-items {
+      flex: 2;
+      background: white;
+      border-radius: 24px;
+      padding: 1.5rem;
+    }
+    .cart-summary {
+      flex: 1;
+      background: white;
+      border-radius: 24px;
+      padding: 1.5rem;
+      height: fit-content;
+    }
+    .cart-item {
+      display: flex;
+      gap: 1rem;
+      border-bottom: 1px solid #eee;
+      padding: 1rem 0;
+      align-items: center;
+    }
+    .cart-item-img {
+      width: 70px;
+      height: 70px;
+      object-fit: cover;
+      border-radius: 12px;
+    }
+    .item-details {
+      flex: 2;
+    }
+    .remove-item {
+      color: #b85c1a;
+      cursor: pointer;
+      background: none;
+      border: none;
+      font-size: 1.2rem;
+    }
+    .delivery-select, .payment-method {
+      margin-top: 20px;
+    }
+    select, input {
+      padding: 10px;
+      border-radius: 30px;
+      border: 1px solid #ccb38c;
+      width: 100%;
+      margin-top: 5px;
+    }
+    .checkout-btn {
+      background: #f5b042;
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 40px;
+      font-weight: bold;
+      font-size: 1rem;
+      margin-top: 20px;
+      cursor: pointer;
+    }
+
+    /* customer service page */
+    .service-flex {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+    }
+    .contact-channels {
+      flex: 1;
+      background: white;
+      border-radius: 24px;
+      padding: 1.5rem;
+    }
+    .reviews-section {
+      flex: 1.5;
+      background: white;
+      border-radius: 24px;
+      padding: 1.5rem;
+    }
+    .social-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #1f3b2c;
+      color: white;
+      padding: 8px 20px;
+      border-radius: 40px;
+      text-decoration: none;
+      margin: 0.5rem 0.5rem 0 0;
+    }
+    .review-card {
+      background: #fcf7ef;
+      border-radius: 20px;
+      padding: 12px;
+      margin-bottom: 12px;
+    }
+    #reviewInput, #reviewName {
+      width: 100%;
+      margin: 8px 0;
+      padding: 10px;
+      border-radius: 30px;
+      border: 1px solid #ccb38c;
+    }
+    button {
+      background: #1f3b2c;
+      border: none;
+      color: white;
+      padding: 8px 20px;
+      border-radius: 40px;
+      cursor: pointer;
+    }
+
+    footer {
+      background: #1f3b2c;
+      color: #e0d6b0;
+      text-align: center;
+      padding: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    @media (max-width: 750px) {
+      .navbar {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="navbar">
+    <div class="logo">
+      <h1>🔥 AB's Bricket</h1>
+      <p>Premium Charcoal Briquettes</p>
+    </div>
+    <div class="nav-links">
+      <a href="#" data-page="home" class="nav-link active">Home</a>
+      <a href="#" data-page="products" class="nav-link">Products</a>
+      <a href="#" data-page="checkout" class="nav-link">Checkout</a>
+      <a href="#" data-page="service" class="nav-link">Customer Service</a>
+    </div>
+    <div class="cart-icon" id="viewCartBtn">
+      <i class="fas fa-shopping-cart"></i> <span id="cartCount">0</span>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+  <!-- HOME PAGE -->
+  <div id="homePage" class="page active-page">
+    <div style="text-align: center; margin-bottom: 2rem;">
+      <img src="https://picsum.photos/id/244/1200/400" alt="Charcoal grilling" style="width:100%; max-height: 380px; object-fit: cover; border-radius: 32px;">
+      <h2 style="margin-top: 1rem;">Premium Briquettes for Perfect Heat</h2>
+      <p>Long-lasting, eco-friendly, and high BTU — make every BBQ unforgettable.</p>
+      <button class="add-to-cart" style="width: auto; padding: 12px 30px;" id="shopNowBtn">Shop Now →</button>
+    </div>
+    <div style="display: flex; gap: 1.5rem; flex-wrap: wrap; justify-content: center;">
+      <div style="background: white; border-radius: 24px; padding: 1.5rem; width: 280px; text-align:center;">
+        <i class="fas fa-fire" style="font-size: 2.5rem; color:#e67e22;"></i>
+        <h3>10% OFF Everything</h3>
+        <p>Automatic discount applied at checkout</p>
+      </div>
+      <div style="background: white; border-radius: 24px; padding: 1.5rem; width: 280px; text-align:center;">
+        <i class="fas fa-truck-fast" style="font-size: 2.5rem; color:#1f3b2c;"></i>
+        <h3>Fast Delivery</h3>
+        <p>Nationwide shipping within 2-4 days</p>
+      </div>
+      <div style="background: white; border-radius: 24px; padding: 1.5rem; width: 280px; text-align:center;">
+        <i class="fas fa-leaf" style="font-size: 2.5rem; color:#2e7d32;"></i>
+        <h3>Eco Charcoal</h3>
+        <p>Sustainable & low smoke</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRODUCTS PAGE with search -->
+  <div id="productsPage" class="page">
+    <h2>Our Charcoal Briquettes 🔥</h2>
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="Search by name or description (e.g., BBQ, Coconut, Hardwood)">
+      <button id="searchBtn"><i class="fas fa-search"></i> Search</button>
+      <button id="resetSearchBtn">Reset</button>
+    </div>
+    <div id="productsGrid" class="products-grid"></div>
+  </div>
+
+  <!-- CHECKOUT PAGE -->
+  <div id="checkoutPage" class="page">
+    <h2>🛒 Checkout</h2>
+    <div class="checkout-layout">
+      <div class="cart-items">
+        <h3>Your Items</h3>
+        <div id="cartItemsList"></div>
+        <div id="emptyCartMsg" style="color: grey; text-align:center; padding: 2rem;">Cart is empty. Add products first.</div>
+      </div>
+      <div class="cart-summary">
+        <h3>Order Summary</h3>
+        <p><strong>Subtotal:</strong> GHC <span id="subtotalSpan">0</span></p>
+        <p><strong>Discount (10%):</strong> -GHC <span id="discountSpan">0</span></p>
+        <p><strong>Delivery Fee:</strong> GHC <span id="deliveryFeeSpan">0</span></p>
+        <p><strong>Total:</strong> GHC <span id="totalSpan">0</span></p>
+        <div class="delivery-select">
+          <label>🚚 Delivery Method:</label>
+          <select id="deliverySelect">
+            <option value="15">Standard Delivery (2-4 days) - GHC 15</option>
+            <option value="30">Express Delivery (1-2 days) - GHC 30</option>
+          </select>
+        </div>
+        <div class="payment-method">
+          <label>💳 Payment Method:</label>
+          <select id="paymentSelect">
+            <option value="mobile_money">Mobile Money (MTN/Vodafone)</option>
+            <option value="card">Credit / Debit Card</option>
+            <option value="cash">Cash on Delivery</option>
+          </select>
+        </div>
+        <button class="checkout-btn" id="completeOrderBtn">Complete Order ✅</button>
+        <p id="orderMsg" style="margin-top: 15px; font-size:0.85rem; color:green;"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CUSTOMER SERVICE PAGE with reviews + WhatsApp/Instagram/Email -->
+  <div id="servicePage" class="page">
+    <h2>🤝 Customer Service</h2>
+    <div class="service-flex">
+      <div class="contact-channels">
+        <h3>Reach Out</h3>
+        <p><i class="fab fa-whatsapp" style="color:#25D366;"></i> <strong>WhatsApp:</strong> +233 50 123 4567</p>
+        <a href="https://wa.me/233501234567" class="social-link" target="_blank"><i class="fab fa-whatsapp"></i> Chat on WhatsApp</a>
+        <a href="https://instagram.com" class="social-link" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+        <a href="mailto:support@absbricket.com" class="social-link"><i class="fas fa-envelope"></i> support@absbricket.com</a>
+        <div style="margin-top: 20px;">
+          <h4>📍 Office Hours:</h4>
+          <p>Mon-Fri: 9am - 6pm | Sat: 10am-2pm</p>
+        </div>
+      </div>
+      <div class="reviews-section">
+        <h3>⭐ Customer Reviews</h3>
+        <div id="reviewsContainer"></div>
+        <form id="reviewForm">
+          <input type="text" id="reviewName" placeholder="Your name" required>
+          <textarea id="reviewInput" rows="2" placeholder="Write your feedback about our charcoal..." required></textarea>
+          <button type="submit">Submit Review</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</main>
+<footer>
+  <p>© 2025 AB's Bricket - Premium Charcoal Briquettes. Authentic grilling experience.</p>
+</footer>
+
+<script>
+  // ---------- PRODUCT DATA (real-life images from Unsplash/Charcoal style)
+  const products = [
+    { id: 1, name: "Coconut Shell Briquettes", desc: "High heat, 4+ hours burn time, low ash", price: 250, image: "https://images.unsplash.com/photo-1585399000684-d2f72660f092?w=500&auto=format", category: "coconut" },
+    { id: 2, name: "Hardwood Lump Charcoal", desc: "Natural oak, pure flavor, quick lighting", price: 390, image: "https://images.unsplash.com/photo-1583962502850-9250b1c659db?w=500&auto=format", category: "hardwood" },
+    { id: 3, name: "Premium BBQ Briquettes (10kg)", desc: "Long-lasting, uniform size, ideal for grills", price: 780, image: "https://images.unsplash.com/photo-1552251064-b3d63fd73fe5?w=500&auto=format", category: "bbq" },
+    { id: 4, name: "Restaurant Grade Briquettes", desc: "Commercial quality, minimal smoke", price: 999, image: "https://images.unsplash.com/photo-1523655222505-6e3b41fefb77?w=500&auto=format", category: "professional" },
+    { id: 5, name: "Eco Mini Briquettes (5kg)", desc: "Recycled materials, perfect for camping", price: 110, image: "https://images.unsplash.com/photo-1622965506003-123a33b15c21?w=500&auto=format", category: "eco" },
+    { id: 6, name: "Smokeless Indoor Briquettes", desc: "Low odor, high density", price: 450, image: "https://images.unsplash.com/photo-1599789197514-4727d9a84fdc?w=500&auto=format", category: "indoor" }
+  ];
+
+  // apply 10% discount -> discounted price = price * 0.9
+  function getDiscountedPrice(price) {
+    return Math.round(price * 0.9);
+  }
+
+  // Cart array: { id, name, price (original), discountedPrice, quantity, image }
+  let cart = [];
+
+  // Load cart from localStorage
+  function loadCart() {
+    const saved = localStorage.getItem("abs_cart");
+    if(saved) {
+      cart = JSON.parse(saved);
+    } else {
+      cart = [];
+    }
+    updateCartUI();
+  }
+
+  function saveCart() {
+    localStorage.setItem("abs_cart", JSON.stringify(cart));
+    updateCartUI();
+  }
+
+  function updateCartUI() {
+    const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+    document.getElementById("cartCount").innerText = count;
+    renderCartItems();
+    if(document.getElementById("checkoutPage").classList.contains("active-page")) {
+      renderCartItems();
+      updateCheckoutSummary();
+    }
+  }
+
+  function addToCart(product) {
+    const existing = cart.find(item => item.id === product.id);
+    const discPrice = getDiscountedPrice(product.price);
+    if(existing) {
+      existing.quantity += 1;
+    } else {
+      cart.push({
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        discountedPrice: discPrice,
+        quantity: 1,
+        image: product.image
+      });
+    }
+    saveCart();
+    alert(`${product.name} added to cart!`);
+  }
+
+  function removeCartItem(id) {
+    cart = cart.filter(item => item.id !== id);
+    saveCart();
+  }
+
+  function updateQuantity(id, delta) {
+    const item = cart.find(i => i.id === id);
+    if(item) {
+      item.quantity += delta;
+      if(item.quantity <= 0) {
+        removeCartItem(id);
+      } else {
+        saveCart();
+      }
+    }
+  }
+
+  function renderCartItems() {
+    const container = document.getElementById("cartItemsList");
+    const emptyMsg = document.getElementById("emptyCartMsg");
+    if(!container) return;
+    if(cart.length === 0) {
+      container.innerHTML = "";
+      emptyMsg.style.display = "block";
+      return;
+    }
+    emptyMsg.style.display = "none";
+    container.innerHTML = cart.map(item => `
+      <div class="cart-item">
+        <img src="${item.image}" class="cart-item-img" alt="${item.name}">
+        <div class="item-details">
+          <strong>${item.name}</strong><br>
+          <span>GHC ${item.discountedPrice} (10% off)</span>
+          <div style="margin-top: 6px;">
+            <button class="remove-item" data-id="${item.id}" data-delta="-1">-</button>
+            <span style="margin:0 12px;">${item.quantity}</span>
+            <button class="remove-item" data-id="${item.id}" data-delta="1">+</button>
+            <button class="remove-item" data-id="${item.id}" data-delta="remove" style="margin-left: 12px;"><i class="fas fa-trash"></i></button>
+          </div>
+        </div>
+        <div>GHC ${item.discountedPrice * item.quantity}</div>
+      </div>
+    `).join("");
+    // attach events
+    document.querySelectorAll(".remove-item").forEach(btn => {
+      btn.addEventListener("click", (e) => {
+        const id = parseInt(btn.getAttribute("data-id"));
+        const delta = btn.getAttribute("data-delta");
+        if(delta === "remove") removeCartItem(id);
+        else updateQuantity(id, parseInt(delta));
+      });
+    });
+    updateCheckoutSummary();
+  }
+
+  function updateCheckoutSummary() {
+    let subtotal = 0;
+    cart.forEach(item => { subtotal += item.discountedPrice * item.quantity; });
+    const discount = subtotal; // but we show discount as 10%? Wait already discounted price - but we need clear representation: our displayed price already 10% off. For transparency: since original price had 10% off, we can show discount separately? original total = sum(original price * qty)
+    let originalTotal = 0;
+    cart.forEach(item => { originalTotal += item.price * item.quantity; });
+    const discountAmount = originalTotal - subtotal;
+    const deliverySelect = document.getElementById("deliverySelect");
+    let deliveryFee = deliverySelect ? parseInt(deliverySelect.value) : 15;
+    const total = subtotal + deliveryFee;
+    document.getElementById("subtotalSpan").innerText = subtotal.toFixed(2);
+    document.getElementById("discountSpan").innerText = discountAmount.toFixed(2);
+    document.getElementById("deliveryFeeSpan").innerText = deliveryFee;
+    document.getElementById("totalSpan").innerText = total.toFixed(2);
+  }
+
+  // Render products with search
+  let currentSearch = "";
+  function renderProducts() {
+    let filtered = products.filter(p => p.name.toLowerCase().includes(currentSearch) || p.desc.toLowerCase().includes(currentSearch));
+    const grid = document.getElementById("productsGrid");
+    if(!grid) return;
+    if(filtered.length === 0) {
+      grid.innerHTML = "<p style='grid-column:1/-1; text-align:center;'>No charcoal products found.</p>";
+      return;
+    }
+    grid.innerHTML = filtered.map(p => `
+      <div class="product-card">
+        <img class="product-img" src="${p.image}" alt="${p.name}" onerror="this.src='https://picsum.photos/id/434/300/200'">
+        <div class="product-info">
+          <h3>${p.name}</h3>
+          <p style="color:#5c4b32;">${p.desc}</p>
+          <div>
+            <span class="price">GHC ${getDiscountedPrice(p.price)}</span>
+            <span class="old-price">GHC ${p.price}</span>
+            <span class="discount-badge">10% OFF</span>
+          </div>
+          <button class="add-to-cart" data-id="${p.id}">Add to Cart 🛒</button>
+        </div>
+      </div>
+    `).join("");
+    document.querySelectorAll(".add-to-cart").forEach(btn => {
+      const id = parseInt(btn.getAttribute("data-id"));
+      const prod = products.find(p => p.id === id);
+      btn.addEventListener("click", () => addToCart(prod));
+    });
+  }
+
+  // Customer reviews (store in localStorage)
+  let reviews = [];
+  function loadReviews() {
+    const stored = localStorage.getItem("abs_reviews");
+    if(stored) reviews = JSON.parse(stored);
+    else reviews = [{ name: "Kwame A.", text: "Best briquettes! Burns evenly and long lasting. Will reorder.", date: new Date().toLocaleDateString() },
+                    { name: "Adwoa M.", text: "Fast delivery and excellent quality. 10% discount is awesome.", date: new Date().toLocaleDateString() }];
+    renderReviews();
+  }
+  function renderReviews() {
+    const container = document.getElementById("reviewsContainer");
+    if(container) {
+      if(reviews.length === 0) container.innerHTML = "<p>No reviews yet. Be the first!</p>";
+      else container.innerHTML = reviews.map(r => `<div class="review-card"><strong>⭐ ${r.name}</strong><p>${r.text}</p><small>${r.date}</small></div>`).join("");
+    }
+  }
+  function addReview(name, text) {
+    if(!name.trim() || !text.trim()) return;
+    reviews.unshift({ name: name.trim(), text: text.trim(), date: new Date().toLocaleDateString() });
+    localStorage.setItem("abs_reviews", JSON.stringify(reviews));
+    renderReviews();
+  }
+
+  // checkout + order simulation
+  function completeOrder() {
+    if(cart.length === 0) { alert("Cart is empty. Add products before checkout."); return; }
+    const deliveryFee = parseInt(document.getElementById("deliverySelect").value);
+    let subtotal = 0;
+    cart.forEach(item => { subtotal += item.discountedPrice * item.quantity; });
+    const totalAmt = subtotal + deliveryFee;
+    const paymentMethod = document.getElementById("paymentSelect").options[document.getElementById("paymentSelect").selectedIndex].text;
+    alert(`✅ Order placed successfully!\nTotal: GHC ${totalAmt.toFixed(2)}\nPayment: ${paymentMethod}\nDelivery: ${deliveryFee === 15 ? "Standard" : "Express"}\nThank you for shopping at AB's Bricket!`);
+    cart = [];
+    saveCart();
+    document.getElementById("orderMsg").innerText = "Order completed! Cart cleared.";
+    setTimeout(()=>{document.getElementById("orderMsg").innerText = "";}, 3000);
+    renderCartItems();
+    updateCheckoutSummary();
+  }
+
+  // Page switching
+  function switchPage(pageId) {
+    document.querySelectorAll(".page").forEach(p => p.classList.remove("active-page"));
+    document.getElementById(pageId + "Page").classList.add("active-page");
+    document.querySelectorAll(".nav-link").forEach(link => link.classList.remove("active"));
+    document.querySelector(`[data-page="${pageId}"]`).classList.add("active");
+    if(pageId === "products") { renderProducts(); }
+    if(pageId === "checkout") { renderCartItems(); updateCheckoutSummary(); }
+    if(pageId === "service") { renderReviews(); }
+  }
+
+  // Event listeners
+  document.querySelectorAll(".nav-link").forEach(link => {
+    link.addEventListener("click", (e) => {
+      e.preventDefault();
+      const page = link.getAttribute("data-page");
+      switchPage(page);
+    });
+  });
+  document.getElementById("viewCartBtn")?.addEventListener("click", () => switchPage("checkout"));
+  document.getElementById("shopNowBtn")?.addEventListener("click", () => switchPage("products"));
+  document.getElementById("searchBtn")?.addEventListener("click", () => {
+    currentSearch = document.getElementById("searchInput").value.toLowerCase();
+    renderProducts();
+  });
+  document.getElementById("resetSearchBtn")?.addEventListener("click", () => {
+    document.getElementById("searchInput").value = "";
+    currentSearch = "";
+    renderProducts();
+  });
+  document.getElementById("deliverySelect")?.addEventListener("change", updateCheckoutSummary);
+  document.getElementById("completeOrderBtn")?.addEventListener("click", completeOrder);
+  document.getElementById("reviewForm")?.addEventListener("submit", (e) => {
+    e.preventDefault();
+    addReview(document.getElementById("reviewName").value, document.getElementById("reviewInput").value);
+    document.getElementById("reviewForm").reset();
+  });
+
+  // initial load
+  loadCart();
+  loadReviews();
+  renderProducts();
+  updateCartUI();
+  // default home
+  switchPage("home");
+</script>
+</body>
+</html> 
